@@ -19,3 +19,8 @@ if __name__ == '__main__':
     print(filter_by_state(test_data))
     print('CANCELED')
     print(filter_by_state(test_data, 'CANCELED'))
+    print('-'*20)
+    print('sort by date desc')
+    print(sort_by_date(test_data))
+    print('sort by date asc')
+    print(sort_by_date(test_data, desc_order=False))
