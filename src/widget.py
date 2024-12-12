@@ -5,7 +5,9 @@ from src.masks import get_mask_account, get_mask_card_number
 def mask_account_card(id_string: str) -> str:
     """функция получает номер счета или карты и маскирует его"""
     if not isinstance(id_string, str):
-        raise TypeError("Номер счета или карты - строка с названием и цифрами и пробелами между ними")
+        raise TypeError(
+            "Номер счета или карты - строка с названием и цифрами и пробелами между ними"
+        )
 
     data = id_string.split()
     if len(data) <= 1:
@@ -41,6 +43,7 @@ def get_date(input_date: str) -> str:
     result = "{}.{}.{}".format(result[2], result[1], result[0])
 
     return result
+
 
 # if __name__ == "__main__":
 #     print(mask_account_card("Visa Platinum 7000792289606361"))

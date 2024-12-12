@@ -26,28 +26,26 @@ def test_bank_account_number_mask(random_bank_account_number: int) -> None:
     assert (result[-4:] == src_number[-4:]) and (result[:2] == "**")
 
 
-def test_incorrect_card_number1():
+def test_incorrect_card_number1() -> None:
     with pytest.raises(ValueError):
         get_mask_card_number(123)
 
 
-def test_incorrect_card_number2():
+def test_incorrect_card_number2() -> None:
     with pytest.raises(TypeError):
         get_mask_card_number(123.4)
 
 
-def test_incorrect_account_number1():
+def test_incorrect_account_number1() -> None:
     with pytest.raises(ValueError):
         get_mask_account(123)
 
 
-def test_incorrect_account_number2():
+def test_incorrect_account_number2() -> None:
     with pytest.raises(TypeError):
         get_mask_account(1234.5)
 
 
-def test_incorrect_account_number3():
+def test_incorrect_account_number3() -> None:
     with pytest.raises(ValueError):
         get_mask_account(1812659170946368319)
-
-

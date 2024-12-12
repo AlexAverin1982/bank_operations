@@ -22,7 +22,7 @@ def test_mask_account_card(test_string: str, expected_mask: str) -> None:
 
 def test_invalid_cards_data() -> None:
     with pytest.raises(ValueError):
-        mask_account_card('')
+        mask_account_card("")
 
 
 def test_invalid_cards_data1() -> None:
@@ -37,7 +37,8 @@ def test_invalid_cards_data2() -> None:
 
 def test_get_date(test_date: str) -> None:
     assert (
-        get_date(test_date) == test_date[8:10] + "." + test_date[5:7] + "." + test_date[:4]
+        get_date(test_date)
+        == test_date[8:10] + "." + test_date[5:7] + "." + test_date[:4]
     )
 
 
@@ -48,33 +49,33 @@ def test_invalid_date() -> None:
 
 def test_invalid_date1() -> None:
     with pytest.raises(ValueError):
-        get_date('123')
+        get_date("123")
 
 
 def test_invalid_date2() -> None:
     with pytest.raises(ValueError):
-        get_date('')
+        get_date("")
 
 
 def test_invalid_date3() -> None:
     with pytest.raises(ValueError):
-        get_date('2024-03-11-02-26:18.671407')
+        get_date("2024-03-11-02-26:18.671407")
 
 
 def test_invalid_date4() -> None:
     with pytest.raises(ValueError):
-        get_date('--')
+        get_date("--")
 
 
 def test_invalid_date5() -> None:
     with pytest.raises(ValueError):
-        get_date('2024-43-11-02-26:18.671407')
+        get_date("2024-43-11-02-26:18.671407")
 
 
 def test_invalid_date6() -> None:
     with pytest.raises(ValueError):
-        get_date('2024-12-32-02-26:18.671407')
+        get_date("2024-12-32-02-26:18.671407")
 
 
-def test_date11():
-    assert get_date('1452-08-15T01:0410.799498') == '15.08.1452'
+def test_date11() -> None:
+    assert get_date("1452-08-15T01:0410.799498") == "15.08.1452"

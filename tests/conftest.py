@@ -34,8 +34,16 @@ def test_data_for_processing() -> list[dict]:
         {"id": 93549570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
         {"id": 41428829, "state": "IN_PROGRESS", "date": "3019-07-03T18:35:29.512364"},
         {"id": 944719570, "state": "IN_PROGRESS", "date": "2018-06-30T02:08:58.425572"},
-        {"id": 1345526727, "state": "IN_PROGRESS", "date": "2014-09-12T21:27:25.241689"},
-        {"id": 6157765591, "state": "IN_PROGRESS", "date": "2018-10-14T08:21:33.419441"},
+        {
+            "id": 1345526727,
+            "state": "IN_PROGRESS",
+            "date": "2014-09-12T21:27:25.241689",
+        },
+        {
+            "id": 6157765591,
+            "state": "IN_PROGRESS",
+            "date": "2018-10-14T08:21:33.419441",
+        },
     ]
 
 
