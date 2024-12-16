@@ -95,7 +95,9 @@ def test_sort_by_date_ascending_order(test_data_for_processing: list[dict]) -> N
         )
     ],
 )
-def test_processing_parametrized(data: list[dict], state: str, expected: list[dict]) -> None:
+def test_processing_parametrized(
+    data: list[dict], state: str, expected: list[dict]
+) -> None:
     result = filter_by_state(data, state)
     passed = len(expected) == len(result)
     for item in result:
