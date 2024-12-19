@@ -1,14 +1,38 @@
+from datetime import datetime, timedelta
 from random import randint
 
 import pytest
+
+transaction_states = ["EXECUTED", "CANCELLED", "IN PROGRESS"]
+currencies = ["USD", "RUR", "EUR", "CNY", "JPY"]
+descriptions = [
+    "Перевод организации",
+    "Перевод со счета на счет",
+    "Перевод с карты на карту",
+]
+
+
+def random_date(
+    start_date_str: str,
+    end_date_str: str,
+    date_format: str = "%Y-%m-%d",
+    output_format: str = "%Y-%m-%dT%X",
+) -> str:
+    start_date = datetime.strptime(start_date_str, date_format)
+    end_date = datetime.strptime(end_date_str, date_format)
+    delta = end_date - start_date
+    days_difference = delta.days
+    res_random_date = start_date + timedelta(days=randint(1, days_difference))
+    return res_random_date.strftime(output_format) + f".{randint(100000, 999999)}"
 
 
 @pytest.fixture()
 def random_card_number(number_length: int = 16) -> int:
     """фикстура номеров банковских карт"""
     result = ""
-    for i in range(number_length):
+    for i in range(number_length - 1):
         result += str(randint(0, 9))
+    result = str(randint(1, 9)) + result
     return int(result)
 
 
@@ -16,8 +40,9 @@ def random_card_number(number_length: int = 16) -> int:
 def random_bank_account_number(number_length: int = 20) -> int:
     """фикстура номеров банковских счетов"""
     result = ""
-    for i in range(number_length):
+    while len(result) < number_length - 1:
         result += str(randint(0, 9))
+    result = str(randint(1, 9)) + result
     return int(result)
 
 
@@ -64,3 +89,32 @@ def test_date() -> str:
         + "."
         + ("000000" + str(randint(0, 999999)))[-6:]
     )
+
+
+def get_random_transaction() -> dict:
+    rnd_currency = currencies[randint(0, len(currencies) - 1)]
+    currency_dict = {"name": rnd_currency, "code": rnd_currency}
+    amount_dict = {
+        "amount": str(randint(100, 1000000)) + "." + str(randint(10, 99)),
+        "currency": currency_dict,
+    }
+    return {
+        "id": randint(100000000, 999999999),
+        "state": transaction_states[randint(0, len(transaction_states) - 1)],
+        "date": random_date("2015-01-01", "2025-01-01"),
+        "operationAmount": amount_dict,
+        "description": descriptions[randint(0, len(descriptions) - 1)],
+        "from": "Счет " + str(random_bank_account_number),
+        "to": "Счет " + str(random_bank_account_number),
+    }
+
+
+@pytest.fixture()
+def random_transactions() -> list[dict]:
+    result = []
+    count = randint(5, 100)
+    for i in range(count):
+        rnd_transaction = get_random_transaction()
+        result.append(rnd_transaction)
+
+    return result
