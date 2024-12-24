@@ -1,3 +1,6 @@
+from src.decorators import log
+
+
 def get_mask_card_number(card_number: int) -> str:
     """функция принимает на вход номер банковской карты в виде числа и возвращает строку с замаскированным номером"""
     if not isinstance(card_number, int):
@@ -21,3 +24,6 @@ def get_mask_account(account_no: int) -> str:
     if len(str(account_no)) != 20:
         raise ValueError("Номер счета - 20 цифр")
     return "**" + str(account_no)[-4:]
+
+
+
