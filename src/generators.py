@@ -34,6 +34,5 @@ def card_number_generator(
     Генератор должен принимать начальное и конечное значения для генерации диапазона номеров.
     """
     return (
-        f"{np(i, 1)} {np(i, 2)} {np(i, 3)} {np(i, 4)}"
-        for i in range(start, stop + 1)
+        f"{np(i, 1)} {np(i, 2)} {np(i, 3)} {np(i, 4)}" for i in range(start, stop + 1)
     )
