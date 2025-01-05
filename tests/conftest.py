@@ -1,3 +1,4 @@
+import random
 from datetime import datetime, timedelta
 from random import randint
 
@@ -91,8 +92,11 @@ def test_date() -> str:
     )
 
 
-def get_random_transaction() -> dict:
-    rnd_currency = currencies[randint(0, len(currencies) - 1)]
+def get_random_transaction(cur_code: str = '') -> dict:
+    if cur_code:
+        rnd_currency = cur_code
+    else:
+        rnd_currency = random.choice(currencies)
     currency_dict = {"name": rnd_currency, "code": rnd_currency}
     amount_dict = {
         "amount": str(randint(100, 1000000)) + "." + str(randint(10, 99)),
