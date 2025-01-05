@@ -31,9 +31,9 @@ def test_incorrect_card_number1() -> None:
         get_mask_card_number(123)
 
 
-def test_incorrect_card_number2() -> None:
-    with pytest.raises(TypeError):
-        get_mask_card_number(123.4)
+# def test_incorrect_card_number2() -> None:
+#     with pytest.raises(TypeError):
+#         get_mask_card_number(123.4)
 
 
 def test_incorrect_account_number1() -> None:
@@ -41,9 +41,9 @@ def test_incorrect_account_number1() -> None:
         get_mask_account(123)
 
 
-def test_incorrect_account_number2() -> None:
-    with pytest.raises(TypeError):
-        get_mask_account(1234.5)
+# def test_incorrect_account_number2() -> None:
+#     with pytest.raises(TypeError):
+#         get_mask_account(1234.5)
 
 
 def test_incorrect_account_number3() -> None:

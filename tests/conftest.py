@@ -92,14 +92,19 @@ def test_date() -> str:
     )
 
 
-def get_random_transaction(cur_code: str = '') -> dict:
+def get_random_transaction(cur_code: str = "") -> dict:
     if cur_code:
         rnd_currency = cur_code
     else:
         rnd_currency = random.choice(currencies)
     currency_dict = {"name": rnd_currency, "code": rnd_currency}
+    while True:
+        v = randint(100, 1000000)
+        if v > 0:
+            break
+
     amount_dict = {
-        "amount": str(randint(100, 1000000)) + "." + str(randint(10, 99)),
+        "amount": str(v) + "." + str(randint(10, 99)),
         "currency": currency_dict,
     }
     return {
