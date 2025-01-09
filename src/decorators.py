@@ -1,10 +1,11 @@
 from functools import wraps
 from time import ctime, time
-from typing import Callable, Any
+from typing import Any, Callable
 
 
 def log(filename: str = "") -> Callable:  # декоратор для журналирования работы функций
-    """ декоратор журналирования работы функций с выводом информации в файл или консоль """
+    """декоратор журналирования работы функций с выводом информации в файл или консоль"""
+
     # внешний декоратор - принимает параметры работы декоратора
     def wrapper(func: Callable) -> Callable:
         # замыкание - возврат обернутой функции вместо исходной
