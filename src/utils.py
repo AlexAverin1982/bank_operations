@@ -1,7 +1,17 @@
 import json
 import os.path
+import logging
 
 from src.external_api import convert_currencies
+
+par_dir = os.path.abspath(os.path.join(__file__, os.pardir))
+par_dir = os.path.abspath(os.path.join(par_dir, os.pardir))
+templatedir = os.path.join(par_dir, "data", "templates")
+reportsdir = os.path.join(par_dir, "data", "reports")
+
+utils_logger = logging.getLogger('utils_logger')
+utils_logger.setLevel(logging.DEBUG)
+utils_log_handler = logging.FileHandler(filename=filename)
 
 
 def load_ops_from_json_file(filename: str) -> list[dict]:
@@ -41,6 +51,5 @@ def transaction_amount(transaction: dict, target_cur_code: str = "RUB") -> float
             raise ValueError("Транзакция содержит неполные данные")
     else:
         raise ValueError("Транзакция содержит неполные данные")
-
 
 # d = load_ops_from_json_file(u'..\data\operations.json')
