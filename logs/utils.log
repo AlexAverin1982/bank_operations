@@ -1,0 +1,36 @@
+2025-01-11 18:18:27,464 INFO in module utils.py: файл D:\python\skypro\bank_operations\data\operations.json с данными операций загружен успешно
+2025-01-11 18:18:27,474 ERROR in module utils.py: Extra data: line 16 column 4 (char 350)
+2025-01-11 18:18:27,477 ERROR in module utils.py: файл ..\invalid_path\operations_invalid.json не найден
+2025-01-11 18:18:29,485 INFO in module utils.py: данные о транзакции загружены успешно
+2025-01-11 18:18:30,001 INFO in module utils.py: валюта JPY переконвертирована в RUB успешно
+2025-01-11 18:18:30,023 INFO in module utils.py: данные о транзакции загружены успешно
+2025-01-11 18:18:31,802 INFO in module utils.py: валюта JPY переконвертирована в EUR успешно
+2025-01-11 18:18:31,811 ERROR in module utils.py: данные о размере транзакции не найдены
+2025-01-11 18:18:31,820 INFO in module utils.py: данные о транзакции загружены успешно
+2025-01-11 18:18:31,820 ERROR in module utils.py: данные о транзакции в валюте не найдены
+2025-01-11 18:18:31,829 INFO in module utils.py: данные о транзакции загружены успешно
+2025-01-11 18:18:32,346 ERROR in module utils.py: Код валюты транзакции указан неверно
+2025-01-11 18:19:33,790 INFO in module utils.py: файл D:\python\skypro\bank_operations\data\operations.json с данными операций загружен успешно
+2025-01-11 18:19:33,794 ERROR in module utils.py: Extra data: line 16 column 4 (char 350)
+2025-01-11 18:19:33,796 ERROR in module utils.py: файл ..\invalid_path\operations_invalid.json не найден
+2025-01-11 18:19:35,063 INFO in module utils.py: данные о транзакции загружены успешно
+2025-01-11 18:19:35,486 INFO in module utils.py: валюта EUR переконвертирована в RUB успешно
+2025-01-11 18:19:35,490 INFO in module utils.py: данные о транзакции загружены успешно
+2025-01-11 18:19:35,969 INFO in module utils.py: валюта USD переконвертирована в EUR успешно
+2025-01-11 18:19:35,974 ERROR in module utils.py: данные о размере транзакции не найдены
+2025-01-11 18:19:35,977 INFO in module utils.py: данные о транзакции загружены успешно
+2025-01-11 18:19:35,978 ERROR in module utils.py: данные о транзакции в валюте не найдены
+2025-01-11 18:19:35,987 INFO in module utils.py: данные о транзакции загружены успешно
+2025-01-11 18:19:36,509 ERROR in module utils.py: Код валюты транзакции указан неверно
+2025-01-11 18:20:22,164 INFO in module utils.py: С„Р°Р№Р» D:\python\skypro\bank_operations\data\operations.json СЃ РґР°РЅРЅС‹РјРё РѕРїРµСЂР°С†РёР№ Р·Р°РіСЂСѓР¶РµРЅ СѓСЃРїРµС€РЅРѕ
+2025-01-11 18:20:22,166 ERROR in module utils.py: Extra data: line 16 column 4 (char 350)
+2025-01-11 18:20:22,172 ERROR in module utils.py: С„Р°Р№Р» ..\invalid_path\operations_invalid.json РЅРµ РЅР°Р№РґРµРЅ
+2025-01-11 18:20:23,895 INFO in module utils.py: РґР°РЅРЅС‹Рµ Рѕ С‚СЂР°РЅР·Р°РєС†РёРё Р·Р°РіСЂСѓР¶РµРЅС‹ СѓСЃРїРµС€РЅРѕ
+2025-01-11 18:20:24,411 INFO in module utils.py: РІР°Р»СЋС‚Р° USD РїРµСЂРµРєРѕРЅРІРµСЂС‚РёСЂРѕРІР°РЅР° РІ RUB СѓСЃРїРµС€РЅРѕ
+2025-01-11 18:20:24,419 INFO in module utils.py: РґР°РЅРЅС‹Рµ Рѕ С‚СЂР°РЅР·Р°РєС†РёРё Р·Р°РіСЂСѓР¶РµРЅС‹ СѓСЃРїРµС€РЅРѕ
+2025-01-11 18:20:24,419 INFO in module utils.py: СЂР°Р·РјРµСЂ С‚СЂР°РЅР·Р°РєС†РёРё РІ СЂСѓР±Р»СЏС… РѕРїСЂРµРґРµР»РµРЅ СѓСЃРїРµС€РЅРѕ
+2025-01-11 18:20:24,427 ERROR in module utils.py: РґР°РЅРЅС‹Рµ Рѕ СЂР°Р·РјРµСЂРµ С‚СЂР°РЅР·Р°РєС†РёРё РЅРµ РЅР°Р№РґРµРЅС‹
+2025-01-11 18:20:24,433 INFO in module utils.py: РґР°РЅРЅС‹Рµ Рѕ С‚СЂР°РЅР·Р°РєС†РёРё Р·Р°РіСЂСѓР¶РµРЅС‹ СѓСЃРїРµС€РЅРѕ
+2025-01-11 18:20:24,435 ERROR in module utils.py: РґР°РЅРЅС‹Рµ Рѕ С‚СЂР°РЅР·Р°РєС†РёРё РІ РІР°Р»СЋС‚Рµ РЅРµ РЅР°Р№РґРµРЅС‹
+2025-01-11 18:20:24,438 INFO in module utils.py: РґР°РЅРЅС‹Рµ Рѕ С‚СЂР°РЅР·Р°РєС†РёРё Р·Р°РіСЂСѓР¶РµРЅС‹ СѓСЃРїРµС€РЅРѕ
+2025-01-11 18:20:24,872 ERROR in module utils.py: РљРѕРґ РІР°Р»СЋС‚С‹ С‚СЂР°РЅР·Р°РєС†РёРё СѓРєР°Р·Р°РЅ РЅРµРІРµСЂРЅРѕ
