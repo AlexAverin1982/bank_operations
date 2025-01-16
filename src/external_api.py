@@ -7,7 +7,7 @@ load_dotenv()
 
 
 def get_currency_rate(cur_code: str) -> dict:
-    """ возвращает текущий курс указанной валюты, используя api"""
+    """возвращает текущий курс указанной валюты, используя api"""
     url = "https://www.cbr-xml-daily.ru/daily_json.js"
     result = {}
     r = requests.get(url)
