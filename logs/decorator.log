@@ -13,3 +13,8 @@ get_mask_card_number_logged_to_file() ok
 get_mask_card_number_logged_to_file() finished at Sat Jan 11 18:20:22 2025
 Run time: 0.0
 Result is 1234 56** **** 3456
+get_mask_card_number_logged_to_file() call start at Thu Jan 16 16:30:17 2025
+get_mask_card_number_logged_to_file() ok
+get_mask_card_number_logged_to_file() finished at Thu Jan 16 16:30:17 2025
+Run time: 0.0009958744049072266
+Result is 1234 56** **** 3456
