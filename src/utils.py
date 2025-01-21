@@ -10,7 +10,7 @@ utils_log_filename = os.path.join(par_dir, "logs", "utils.log")
 
 logging.basicConfig(level=logging.DEBUG, filemode="w", encoding="utf-8")
 utils_logger = logging.getLogger("utils_logger")
-utils_logger.setLevel(logging.DEBUG)
+utils_logger.setLevel(logging.CRITICAL)
 utils_log_handler = logging.FileHandler(filename=utils_log_filename, encoding="utf-8")
 """ Формат записи логов включает метку времени, название модуля, уровень серьезности и сообщение. """
 utils_log_formatter = logging.Formatter(
@@ -36,37 +36,77 @@ def load_ops_from_json_file(filename: str) -> list[dict]:
     return result
 
 
-def transaction_amount(transaction: dict, target_cur_code: str = "RUB") -> float:
-    """принимает на вход транзакцию и возвращает сумму транзакции (amount)
-    в рублях (по умолчанию) или в другой указанной валюте"""
+def extract_amount_from(transaction: dict) -> float:
+    """извлекает объем транзакции в исходной валюте"""
     op_amount = transaction.get("operationAmount", {})
     if op_amount:
         utils_logger.info("данные о транзакции загружены успешно")
-        currency = op_amount.get("currency", {})
         amount = op_amount.get("amount")
-        if amount:
-            amount = float(amount)
-            cur_code = currency.get("code")
-            if cur_code:
-                if cur_code != target_cur_code:
-                    result = convert_currencies(cur_code, target_cur_code, amount)
-                    if result != 0:
-                        utils_logger.info(
-                            f"валюта {cur_code} переконвертирована в {target_cur_code} успешно"
-                        )
-                        return result
-                    else:
-                        utils_logger.error("Код валюты транзакции указан неверно")
-                        raise ValueError("Код валюты транзакции указан неверно")
-                else:
-                    utils_logger.info("размер транзакции в рублях определен успешно")
-                    return float(amount)
-            else:
-                utils_logger.error("данные о валюте не найдены")
-                raise ValueError("Транзакция содержит неполные данные")
+        if amount:              # and amount.isnumeric():
+            utils_logger.info("размер транзакции определен успешно")
+            return float(amount)
         else:
             utils_logger.error("данные о транзакции в валюте не найдены")
             raise ValueError("Транзакция содержит неполные данные")
+    else:
+        amount = transaction.get("amount", "")
+        if amount and amount.isnumeric():
+            return float(amount)
+        else:
+            utils_logger.error("данные о размере транзакции не найдены")
+            raise ValueError("Транзакция содержит неполные данные")
+
+
+def get_currency_code(transaction: dict) -> str:
+    """принимает на вход транзакцию и возвращает код валюты"""
+    op_amount = transaction.get("operationAmount", {})
+    if op_amount:
+        currency = op_amount.get("currency", {})
+        return currency.get("name", "")
+    else:
+        currency = transaction.get("currency_code", "")
+        if currency:
+            return currency
+        else:
+            utils_logger.error("данные о размере транзакции не найдены")
+            raise ValueError("Транзакция содержит неполные данные")
+
+
+def get_currency_name(transaction: dict) -> str:
+    """принимает на вход транзакцию и возвращает имя валюты"""
+    op_amount = transaction.get("operationAmount", {})
+    if op_amount:
+        currency = op_amount.get("currency", {})
+        return currency.get("name", "")
+    else:
+        currency = transaction.get("currency_name", "")
+        if currency:
+            return str(currency)
+        else:
+            utils_logger.error("данные о размере транзакции не найдены")
+            raise ValueError("Транзакция содержит неполные данные")
+
+
+def transaction_amount(transaction: dict, target_cur_code: str = "RUB") -> float:
+    """принимает на вход транзакцию и возвращает сумму транзакции (amount)
+    в рублях (по умолчанию) или в другой указанной валюте"""
+    amount = extract_amount_from(transaction)
+    if amount:
+        utils_logger.info("данные о транзакции загружены успешно")
+        currency_code = get_currency_code(transaction)
+        if currency_code != target_cur_code:
+            result = convert_currencies(currency_code, target_cur_code, amount)
+            if result != 0:
+                utils_logger.info(
+                    f"валюта {currency_code} переконвертирована в {target_cur_code} успешно"
+                )
+                return result
+            else:
+                utils_logger.error(f"Код валюты {currency_code} транзакции указан неверно")
+                raise ValueError(f"Код валюты {currency_code} транзакции указан неверно")
+        else:
+            utils_logger.info("размер транзакции определен успешно")
+            return float(amount)
     else:
         utils_logger.error("данные о размере транзакции не найдены")
         raise ValueError("Транзакция содержит неполные данные")

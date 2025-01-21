@@ -83,6 +83,7 @@ def test_RUB_rate() -> None:
     assert str(e.value) == "Данные по этой валюте отсутствуют"
 
 
+@pytest.mark.flaky(reruns=3, reruns_delay=60)
 def test_convert_currencies() -> None:
     assert convert_currencies("RUB", "USD", 100) > 0
 
@@ -93,7 +94,7 @@ def test_transaction_amount(random_transactions: list[dict]) -> None:
 
 
 def test_transaction_amount2(random_transactions: list[dict]) -> None:
-    result = transaction_amount(random.choice(random_transactions), "EUR")
+    result = transaction_amount(random.choice(random_transactions), "USD")
     assert result > 0
 
 

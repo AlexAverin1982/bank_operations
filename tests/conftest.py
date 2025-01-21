@@ -5,7 +5,7 @@ from random import randint
 import pytest
 
 transaction_states = ["EXECUTED", "CANCELLED", "IN PROGRESS"]
-currencies = ["USD", "RUR", "EUR", "CNY", "JPY"]
+currencies = ["USD", "RUB", "EUR", "CNY", "JPY"]
 descriptions = [
     "Перевод организации",
     "Перевод со счета на счет",
