@@ -4,12 +4,13 @@ from src.generators import filter_by_currency, filter_by_currency2
 from src.masks import get_masked_account_or_card
 from src.processing import filter_by_state, sort_by_date
 from src.re_tools import find_matches_in_description
+from src.text_utils import get_word_ending
 from src.utils import get_currency_code, get_currency_name, transaction_amount
 from src.widget import get_date
 
 
 def show_main_menu() -> int:
-    """главное меню программы"""
+    """ Главное меню программы """
 
     print("Выберите необходимый пункт меню:")
     print("1. Получить информацию о транзакциях из JSON-файла")
@@ -34,7 +35,7 @@ def show_main_menu() -> int:
 
 
 def show_select_status_menu() -> str:
-    """меню выбора статуса отображаемых транзакций"""
+    """ Меню выбора статуса отображаемых транзакций """
     while True:
         print("Программа: Введите статус, по которому необходимо выполнить фильтрацию.")
         print("Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING")
@@ -48,7 +49,7 @@ def show_select_status_menu() -> str:
 
 
 def show_display_params_menu() -> dict:
-    """меню параметров отображения результатов"""
+    """ Меню параметров отображения результатов """
     result = {}
     user_choise = input("Отсортировать операции по дате? Да/Нет: ").lower()
     result["sort by date"] = user_choise == "да"
@@ -68,18 +69,36 @@ def show_display_params_menu() -> dict:
     return result
 
 
-def query_file_name() -> str:
-    """запрос имени файла для чтения"""
-    while True:
-        filename = input("Введите полный путь к файлу данных: ")
-        if not os.path.exists(filename):
-            print("\nВведнный файл не существует.\n")
-            interrupt = input("Прекратить ввод? Да/нет: ").lower() == "да"
-            if interrupt:
-                filename = ""
-                break
-        else:
-            break
+def query_file_name(filetype: int) -> str:
+    """ Запрос имени файла для чтения """
+
+    par_dir = os.path.abspath(os.path.join(__file__, os.pardir))
+    # par_dir = os.path.abspath(os.path.join(par_dir, os.pardir))
+    data_dir = os.path.join(par_dir, "data")
+
+    if filetype == 1:
+        ext = '.json'
+    elif filetype == 2:
+        ext = '.csv'
+    else:
+        ext = '.xlsx'
+
+    files_list = []
+    for root, dirs, files in os.walk(data_dir):
+        for f in files:
+            if f.lower().endswith(ext):
+                files_list.append(f)
+
+    print('\nФайлы, доступные для чтения в каталоге data:\n')
+    for i, filename in enumerate(files_list):
+        print(f"{i + 1}. {filename}")
+    user_choise = input('Введите номер нужного файла или что-нибудь другое для отмены: ')
+
+    filename = ''
+    if user_choise.isdigit():
+        user_choise = int(user_choise)
+        if user_choise in range(1, len(files_list) + 1):
+            filename = os.path.join(data_dir, files_list[user_choise - 1])
     return filename
 
 
@@ -121,19 +140,24 @@ def print_formatted_operation(data: dict) -> None:
     else:
         print(get_masked_account_or_card(dst_account))
 
-    print(f"Сумма: {amount} {currency_name}\n")
+    print(f"Сумма: {amount} {currency_name.replace('Ruble', 'руб.')}\n")
+    print('-' * 50)
 
 
 def show_result(result_data: list[dict]) -> None:
     if len(result_data):
+        print('-'*50)
         print("\nРаспечатываю итоговый список транзакций...\n")
         print(f"Всего банковских операций в выборке: {len(result_data)}")
+        print('-' * 50)
         for item in result_data:
             print_formatted_operation(item)
     else:
+        print('-' * 50)
         print(
             "Не найдено ни одной транзакции, подходящей под ваши условия фильтрации\n"
         )
+        print('-' * 50)
 
 
 def main():
@@ -142,14 +166,20 @@ def main():
     while True:
         final_data_to_show = []
         file_type = show_main_menu()
-        if file_type == 0:
+        if file_type not in (1, 2, 3):
             break
 
-        data_file = query_file_name()
+        data_file = query_file_name(file_type)
         if not data_file:
             break
 
         operations_data = load_data_from_file(data_file, file_type)
+
+        if operations_data:
+            print(f'\nИз файла успешно загружено {len(operations_data)} запис{get_word_ending(len(operations_data))}\n')
+        else:
+            print('\nНе удалось прочитать данные из указанного файла\n')
+            continue
 
         filter_status = show_select_status_menu()
         results_display_params = show_display_params_menu()
@@ -168,10 +198,12 @@ def main():
 
         if results_display_params["rub only"]:
             final_data_to_show = list(filter_by_currency(data_to_show, "RUB"))
+            if final_data_to_show:
+                data_to_show = final_data_to_show
             if not final_data_to_show:
-                final_data_to_show = list(filter_by_currency2(data_to_show, "RUB"))
+                data_to_show = list(filter_by_currency2(data_to_show, "RUB"))
 
-        show_result(final_data_to_show)
+        show_result(data_to_show)
 
 
 if __name__ == "__main__":

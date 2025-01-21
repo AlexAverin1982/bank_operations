@@ -59,9 +59,10 @@ def get_mask_account(account_no: int | str) -> str:
 
 
 def get_masked_account_or_card(account: str) -> str:
-    digits_pos = re.search(r"\d", account).regs[0][0]
-    if digits_pos:
-        digits_pos = digits_pos.regs[0][0]
+    digits_pos = re.search(r"\d", account)
+    if not digits_pos:
+        return ''
+    digits_pos = digits_pos.regs[0][0]
     prefix = account[:digits_pos]
     digits = account[digits_pos:].replace(" ", "")
     # if digits.isdigit():
