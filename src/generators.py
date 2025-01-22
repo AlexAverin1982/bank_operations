@@ -13,6 +13,15 @@ def filter_by_currency(transactions: list[dict], currency: str) -> filter:
     )
 
 
+def filter_by_currency2(transactions: list[dict], currency: str) -> filter:
+    """Функция возвращает итератор, который поочередно выдает транзакции,
+    где валюта операции соответствует заданной (например, USD)."""
+    return filter(
+        lambda x: x.get("currency_code", "") == currency,
+        transactions,
+    )
+
+
 def transaction_descriptions(transactions: list[dict]) -> Generator:
     """генератор принимает на вход список словарей с транзакциями и возвращает описание каждой операции по очереди"""
     for x in transactions:

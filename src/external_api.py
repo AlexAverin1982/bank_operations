@@ -35,5 +35,8 @@ def convert_currencies(convert_from: str, convert_to: str, amount: float) -> flo
 
     if response.ok:
         return float(response.json()["result"])
+    elif response.status_code == 429:
+        raise ValueError('API перегружен запросами')
+    #     return 0.001
     else:
         return 0.0

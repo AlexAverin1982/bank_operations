@@ -1,5 +1,6 @@
 import logging
 import os.path
+import re
 
 par_dir = os.path.abspath(os.path.join(__file__, os.pardir))
 par_dir = os.path.abspath(os.path.join(par_dir, os.pardir))
@@ -8,7 +9,7 @@ masks_log_filename = os.path.join(par_dir, "logs", "masks.log")
 # Основная конфигурация logging
 logging.basicConfig(level=logging.DEBUG, filemode="w")
 masks_logger = logging.getLogger("masks_logger")
-masks_logger.setLevel(logging.DEBUG)
+masks_logger.setLevel(logging.CRITICAL)
 masks_log_handler = logging.FileHandler(filename=masks_log_filename)
 """ Формат записи логов включает метку времени, название модуля, уровень серьезности и сообщение """
 masks_log_formatter = logging.Formatter(
@@ -18,9 +19,9 @@ masks_log_handler.setFormatter(masks_log_formatter)
 masks_logger.addHandler(masks_log_handler)
 
 
-def get_mask_card_number(card_number: int) -> str:
+def get_mask_card_number(card_number: int | str) -> str:
     """функция принимает на вход номер банковской карты в виде числа и возвращает строку с замаскированным номером"""
-    if not isinstance(card_number, int):
+    if not isinstance(card_number, int) and not isinstance(card_number, str):
         masks_logger.error(
             f"{card_number} не является номером карты, не состоит из 16 цифр"
         )
@@ -41,9 +42,9 @@ def get_mask_card_number(card_number: int) -> str:
     )
 
 
-def get_mask_account(account_no: int) -> str:
+def get_mask_account(account_no: int | str) -> str:
     """функция принимает на вход номер банковского счета в виде числа и возвращает строку с замаскированным номером"""
-    if not isinstance(account_no, int):
+    if not isinstance(account_no, int) and not (isinstance(account_no, str)):
         masks_logger.error(
             f"{account_no} не является номером счета, не состоит из 20 цифр"
         )
@@ -55,3 +56,20 @@ def get_mask_account(account_no: int) -> str:
         raise ValueError("Номер счета - 20 цифр")
     masks_logger.info("номер счета замаскирован успешно")
     return "**" + str(account_no)[-4:]
+
+
+def get_masked_account_or_card(account: str) -> str:
+    digits_pos = re.search(r"\d", account)
+    if not digits_pos:
+        return ''
+    digits_pos = digits_pos.regs[0][0]
+    prefix = account[:digits_pos]
+    digits = account[digits_pos:].replace(" ", "")
+    # if digits.isdigit():
+    #     digits = int(digits)
+    # else:
+    #     digits = 0
+    if prefix.lower().find("счет") == 0:
+        return prefix + get_mask_account(digits)
+    else:
+        return prefix + get_mask_card_number(digits)
